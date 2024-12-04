@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="1dp">
+
+    <ImageView
+        android:id="@+id/imageGalleryItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/image1">
+
+
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#91000000"
+        app:layout_constraintBottom_toBottomOf="@+id/imageGalleryItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textGalleryItem"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Card 1"
+            android:paddingBottom="2dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp">
+
+            <Button
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:backgroundTint="#00000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#15cfc1"
+                android:textSize="15dp"
+                android:text="ACCEPT"
+                android:layout_marginLeft="10dp"
+            />
+
+            <Button
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="10dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:backgroundTint="#00000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#15cfc1"
+                android:textSize="15dp"
+                android:text="CANCEL"
+                android:layout_marginLeft="2dp"
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
