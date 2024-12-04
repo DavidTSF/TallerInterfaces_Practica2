@@ -14,8 +14,6 @@ import dev.davveg.practica2.model.GalleryCard
 
 class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
-    private var position = 0
-
     var superheros: List<GalleryCard>  = ArrayList()
     lateinit var context: Context
 
@@ -28,11 +26,6 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
         val item = superheros.get(position)
         holder.bind(item, context)
 
-        holder.itemView.setOnLongClickListener {
-            setPosition(holder.layoutPosition)
-            false
-        }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,21 +36,10 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     override fun getItemCount(): Int {
         return superheros.size
     }
-    fun getPosition(): Int {
-        return position
-    }
-    fun setPosition(position: Int) {
-        this.position = position
-    }
 
-
-
-
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCreateContextMenuListener {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardImage = view.findViewById(R.id.imageGalleryItem) as ImageView
         val cardText = view.findViewById(R.id.textGalleryItem) as TextView
-
 
         fun bind(card: GalleryCard, context: Context){
             cardImage.setImageResource(card.image)
@@ -65,14 +47,5 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
         }
 
-
-        override fun onCreateContextMenu(
-            menu: ContextMenu?,
-            v: View?,
-            menuInfo: ContextMenu.ContextMenuInfo?
-        ) {
-            v?.setOnCreateContextMenuListener(this);
-            menu?.add("...")
-        }
     }
 }

@@ -50,27 +50,7 @@ class GalleryFragment : Fragment() {
         mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL )
         getView()?.let { mAdapter.RecyclerAdapter(cardList, it.context) }
         mRecyclerView.adapter = mAdapter
-        registerForContextMenu(mRecyclerView)
 
-
-    }
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        val toast:Toast  = Toast.makeText(context,
-            mAdapter.superheros[mAdapter.getPosition()].name, Toast.LENGTH_SHORT)
-
-
-        return super.onContextItemSelected(item)
-    }
-
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        val inflater = activity?.menuInflater
-        inflater?.inflate(R.menu.menu_context, menu)
     }
 
 }

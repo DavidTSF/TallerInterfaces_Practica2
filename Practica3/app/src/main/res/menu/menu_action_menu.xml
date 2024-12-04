@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/context_edit2"
+            android:icon="@android:drawable/ic_menu_camera"
+            android:title="Editar" />
+        <item
+            android:id="@+id/context_delete2"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="Eliminar" />
+        <item
+            android:id="@+id/context_share2"
+            android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="Compartir" />
+    </group>
+</menu>
