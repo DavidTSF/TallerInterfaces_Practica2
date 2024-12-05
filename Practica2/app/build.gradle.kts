@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.davveg.practica2"
+    namespace = "dev.davidvega.practica2"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "dev.davveg.practica2"
+        applicationId = "dev.davidvega.practica2"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -33,7 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
+    buildFeatures{
         viewBinding = true
     }
 }
@@ -50,6 +50,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
-    implementation ("com.google.android.material:material:1.3.0-alpha03")
 }

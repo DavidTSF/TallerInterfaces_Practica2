@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.davveg.practica1"
+    namespace = "dev.davidvega.practica1"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "dev.davveg.practica1"
+        applicationId = "dev.davidvega.practica1"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -33,7 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
+    buildFeatures{
         viewBinding = true
     }
 }
@@ -45,11 +45,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation ("androidx.navigation:navigation-fragment:2.3.0")
-    implementation ("androidx.navigation:navigation-ui:2.3.0")
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
-    implementation ("com.google.android.material:material:1.3.0-alpha03")
 }

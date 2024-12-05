@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragmentHome">
+    app:startDestination="@id/tab1Fragment">
 
     <fragment
-        android:id="@+id/fragmentHome"
-        android:name="dev.davveg.practica3.FragmentHome"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/tab1Fragment"
+        android:name="dev.davidvega.practica2.Tab1Fragment"
+        android:label="fragment_tab1"
+        tools:layout="@layout/fragment_tab1" />
     <fragment
-        android:id="@+id/galleryFragment"
-        android:name="dev.davveg.practica3.GalleryFragment"
-        android:label="fragment_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/tab2Fragment"
+        android:name="dev.davidvega.practica2.Tab2Fragment"
+        android:label="fragment_tab2"
+        tools:layout="@layout/fragment_tab2" />
     <fragment
-        android:id="@+id/slideshowFragment"
-        android:name="dev.davveg.practica3.SlideshowFragment"
-        android:label="fragment_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/tab3Fragment"
+        android:name="dev.davidvega.practica2.Tab3Fragment"
+        android:label="fragment_tab3"
+        tools:layout="@layout/fragment_tab3" />
 </navigation>
