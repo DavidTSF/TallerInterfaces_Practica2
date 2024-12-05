@@ -1,53 +1,45 @@
 package dev.davveg.practica3
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.selection.ItemDetailsLookup
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.davveg.practica3.databinding.FragmentGalleryBinding
 import dev.davveg.practica3.model.GalleryCard
 
+class GalleryFragment : Fragment() {
 
-class GalleryFragment : Fragment(), ActionMode.Callback  {
-    lateinit var binding: FragmentGalleryBinding
-    private var actionMode: ActionMode? = null
-    private lateinit var tracker: SelectionTracker
-
-    var mCurrentItemPosition = 0
-    lateinit var mRecyclerView : RecyclerView
-    val mAdapter : GalleryAdapter = GalleryAdapter()
-
+    private lateinit var binding: FragmentGalleryBinding
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var mAdapter: GalleryAdapter
+    private var selectedItem: GalleryCard? = null
+    private lateinit var toolbar: Toolbar
+    private var isInActionMode = false
+    private lateinit var defaultNavigationIcon: Drawable
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentGalleryBinding.inflate(inflater, container, false)
         return binding.root
-
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerViewGallery = getView()?.findViewById<RecyclerView>(R.id.recyclerViewGallery)
 
-        var cardList = listOf(
+        toolbar = requireActivity().findViewById(R.id.toolbar)
+
+        val cardList = listOf(
             GalleryCard("Card 1", R.drawable.image1),
             GalleryCard("Card 2", R.drawable.image2),
             GalleryCard("Card 3", R.drawable.image3),
@@ -59,32 +51,86 @@ class GalleryFragment : Fragment(), ActionMode.Callback  {
             GalleryCard("Card 9", R.drawable.image9),
         )
 
-
-        mRecyclerView = view?.findViewById(R.id.recyclerViewGallery) as RecyclerView
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL )
-        getView()?.let { mAdapter.RecyclerAdapter(cardList, it.context) }
-        mRecyclerView.adapter = mAdapter
+        mRecyclerView = binding.recyclerViewGallery
+        mRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         registerForContextMenu(mRecyclerView)
 
-        //tracker
-        var tracker = SelectionTracker.Builder(
-            "my-selection-id",
-            binding.recyclerViewGallery,
-            StableIdKeyProvider(binding.recyclerViewGallery),
-            ItemDetailsLookup.ItemDetails<RecyclerView>(binding.recyclerViewGallery),
-            StorageStrategy.createLongStorage())
-            .withOnItemActivatedListener(myItemActivatedListener)
-            .build()
+        mAdapter = GalleryAdapter(cardList, requireContext()) { item ->
+            handleItemClick(item)
+        }
+
+        mRecyclerView.adapter = mAdapter
+
+        defaultNavigationIcon = toolbar.navigationIcon!!
+
+    }
+
+    private fun handleItemClick(item: GalleryCard) {
+        if (isInActionMode) {
+            // Si estamos en modo action y seleccionamos un item diferente se reemplaza
+            if (selectedItem != item) {
+                selectedItem = item
+                toolbar.title = selectedItem?.name
+            }
+        } else {
+            startContextualToolbar(item)
+        }
+    }
 
 
+    private fun startContextualToolbar(item: GalleryCard) {
+        isInActionMode = true
+        selectedItem = item
+        toolbar.title = item.name
+        toolbar.inflateMenu(R.menu.menu_action_menu)
 
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            var handled = when (menuItem.itemId) {
+                R.id.actionMenuDelete -> {
+                    Toast.makeText(context, "Eliminar ${selectedItem?.name}", Toast.LENGTH_LONG)
+                        .show()
+                    clearSelection()
+                    true
+                }
+
+                R.id.actionMenuEdit -> {
+                    Toast.makeText(context, "Editar ${selectedItem?.name}", Toast.LENGTH_LONG)
+                        .show()
+                    clearSelection()
+                    true
+                }
+
+                R.id.actionMenuShare -> {
+                    Toast.makeText(
+                        context,
+                        "Compartir ${selectedItem?.name}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    clearSelection()
+                    true
+                }
+
+                else -> false
+            }
+            handled
+        }
+
+    }
+
+    private fun clearSelection() {
+        isInActionMode = false
+        selectedItem = null
+
+        // Reinicia el Toolbar
+        toolbar.menu.clear()
+        toolbar.navigationIcon = defaultNavigationIcon
+        toolbar.title = "Gallery"
     }
 
     // Menu contextual
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val toast:Toast  = Toast.makeText(context,
-            mAdapter.superheros[mAdapter.getPosition()].name, Toast.LENGTH_SHORT)
+            mAdapter.galleryCardList[mAdapter.getPosition()].name, Toast.LENGTH_SHORT)
         toast.show()
 
         return super.onContextItemSelected(item)
@@ -100,35 +146,4 @@ class GalleryFragment : Fragment(), ActionMode.Callback  {
         inflater?.inflate(R.menu.menu_context, menu)
     }
 
-    // Menu action
-
-    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-        mode?.menuInflater?.inflate(R.menu.menu_action_menu, menu)
-        return true
-    }
-
-    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = true
-
-    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.context_share2 -> {
-                //write your own logic here for the Item you want to do with it.
-                val selected = mAdapter.superheros.filterNot {
-                    tracker.selection.contains(it.title)
-                }.toMutableList()
-                mAdapter.superheros = selected
-                mAdapter.notifyDataSetChanged()
-                actionMode?.finish()
-                true
-            }
-            else -> {
-                false
-            }
-        }
-    }
-
-    override fun onDestroyActionMode(mode: ActionMode?) {
-        tracker.clearSelection()
-        actionMode = null
-    }
 }

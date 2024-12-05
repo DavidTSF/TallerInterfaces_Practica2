@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
-            android:id="@+id/context_edit2"
-            android:icon="@android:drawable/ic_menu_camera"
-            android:title="Editar" />
+            android:id="@+id/actionMenuDelete"
+            android:icon="@android:drawable/ic_menu_delete"
+            android:title="Eliminar"
+            app:showAsAction="always"/>
         <item
-            android:id="@+id/context_delete2"
-            android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Eliminar" />
+            android:id="@+id/actionMenuEdit"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="Editar"
+            app:showAsAction="always"/>
         <item
-            android:id="@+id/context_share2"
-            android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Compartir" />
-    </group>
+            android:id="@+id/actionMenuShare"
+            android:icon="@android:drawable/ic_menu_share"
+            android:title="Compartir"
+            app:showAsAction="always"/>
 </menu>

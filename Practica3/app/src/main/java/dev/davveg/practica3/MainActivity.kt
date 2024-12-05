@@ -19,16 +19,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Buscamos la toolbar y le asignamos el titulo
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         actionBarDrawerToggle = ActionBarDrawerToggle(this,drawerLayout,R.string.nav_open,R.string.nav_close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
-        // Buscamos la toolbar y le asignamos el titulo
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar);
-        supportActionBar?.title = "Home"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val navView = findViewById<NavigationView>(R.id.nav_view)
         //Le añadimos un listener y segun a lo que haga click vamos a realizar una accion
